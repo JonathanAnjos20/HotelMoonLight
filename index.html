@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const nomeHotel = "Moonlight Hotel";
+        let hospedes = [];
+
+        function mensagemBoasVindas(nome) {
+            alert(`Bem-vindo ao ${nomeHotel}, ${nome}. É um imenso prazer ter você por aqui!`);
+        }
+
+        function mensagemDespedida(nome) {
+            alert(`Muito obrigado e até logo, ${nome}.`);
+        }
+
+        function inicio() {
+            alert("============== MENU ==============\n1. Programa de Reservas\n2. Cadastro de Hóspedes\n3. Pesquisa de Hóspedes\n4. Abastecimento de Veículo\n5. Manutenção de Ar-Condicionado\n6. Sair\n==================================");
+
+            const opcao = parseInt(prompt("Escolha uma opção:"));
+
+            switch (opcao) {
+                case 1:
+                    programaReservas();
+                    break;
+                case 2:
+                    cadastrarHospede();
+                    break;
+                case 3:
+                    pesquisarHospede();
+                    break;
+                case 4:
+                    abastecerVeiculo();
+                    break;
+                case 5:
+                    manutencaoArCondicionado();
+                    break;
+                case 6:
+                    alert("Saindo do sistema...");
+                    return;
+                default:
+                    alert("Opção inválida. Por favor, escolha uma opção válida.");
+                    inicio();
+                    break;
+            }
+        }
+
+        function programaReservas() {
+            alert("Funcionalidade de reservas em desenvolvimento...");
+            fazerReserva();
+        }
+
+        function cadastrarHospede() {
+            if (hospedes.length >= 15) {
+                alert("Máximo de cadastros atingido.");
+                inicio();
+                return;
+            }
+            const nomeHospede = prompt("Qual o nome do Hóspede?");
+            hospedes.push(nomeHospede);
+            alert(`Hóspede ${nomeHospede} foi cadastrado com sucesso!`);
+            inicio();
+        }
+
+        function pesquisarHospede() {
+            const nomePesquisa = prompt("Qual o nome do Hóspede?");
+            if (hospedes.includes(nomePesquisa)) {
+                alert(`Hóspede ${nomePesquisa} foi encontrado!`);
+            } else {
+                alert(`Hóspede ${nomePesquisa} não foi encontrado!`);
+            }
+            inicio();
+        }
+
+        function abastecerVeiculo() {
+            const precoAlcoolWayneOil = parseFloat(prompt("Qual o valor do álcool no posto Wayne Oil?"));
+            const precoGasolinaWayneOil = parseFloat(prompt("Qual o valor da gasolina no posto Wayne Oil?"));
+            const precoAlcoolStarkPetrol = parseFloat(prompt("Qual o valor do álcool no posto Stark Petrol?"));
+            const precoGasolinaStarkPetrol = parseFloat(prompt("Qual o valor da gasolina no posto Stark Petrol?"));
+
+            const precoLitroAlcool = 4.2;
+            const precoLitroGasolina = 5.82;
+
+            const volumeTanque = 42; 
+
+            const totalAlcoolWayneOil = precoAlcoolWayneOil * volumeTanque;
+            const totalGasolinaWayneOil = precoGasolinaWayneOil * volumeTanque;
+            const totalAlcoolStarkPetrol = precoAlcoolStarkPetrol * volumeTanque;
+            const totalGasolinaStarkPetrol = precoGasolinaStarkPetrol * volumeTanque;
+
+            const maisBaratoAlcool = Math.min(totalAlcoolWayneOil, totalAlcoolStarkPetrol);
+            const maisBaratoGasolina = Math.min(totalGasolinaWayneOil, totalGasolinaStarkPetrol);
+
+            let combustivelMaisAtraente = "";
+            let postoMaisBarato = "";
+
+            if ((precoLitroGasolina * 0.7) > precoLitroAlcool) {
+                combustivelMaisAtraente = "álcool";
+            } else {
+                combustivelMaisAtraente = "gasolina";
+            }
+
+            if (maisBaratoAlcool < maisBaratoGasolina) {
+                postoMaisBarato = "Wayne Oil";
+            } else {
+                postoMaisBarato = "Stark Petrol";
+            }
+
+            alert(`É mais barato abastecer com ${combustivelMaisAtraente} no posto ${postoMaisBarato}.`);
+
+            inicio();
+        }
+
+        function manutencaoArCondicionado() {
+            let menorValor = Number.MAX_VALUE;
+            let empresaMenorValor = "";
+
+            do {
+                const nomeEmpresa = prompt("Qual o nome da empresa?");
+                const valorPorAparelho = parseFloat(prompt("Qual o valor por aparelho?"));
+                const quantidadeAparelhos = parseInt(prompt("Qual a quantidade de aparelhos?"));
+                const porcentagemDesconto = parseInt(prompt("Qual a porcentagem de desconto?"));
+                const quantidadeMinimaDesconto = parseInt(prompt("Qual o número mínimo de aparelhos para conseguir o desconto?"));
+
+                let total = valorPorAparelho * quantidadeAparelhos;
+                let desconto = 0;
+
+                if (quantidadeAparelhos >= quantidadeMinimaDesconto) {
+                    desconto = (porcentagemDesconto / 100) * total;
+                    total -= desconto;
+                }
+
+                alert(`O serviço de ${nomeEmpresa} custará R$ ${total}`);
+
+                if (total < menorValor) {
+                    menorValor = total;
+                    empresaMenorValor = nomeEmpresa;
+                }
+
+                var continuar = prompt("Deseja informar novos dados? (S/N)");
+            } while (continuar.toUpperCase() === 'S');
+
+            alert(`O orçamento de menor valor é o de ${empresaMenorValor} por R$ ${menorValor}`);
+        }
+
+        function main() {
+            mensagemBoasVindas(prompt("Digite seu nome:"));
+            inicio();
+        }
+
+        main();
+    </script>
+</body>
+</html>
